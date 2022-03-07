@@ -6,7 +6,7 @@ class UserController < ApplicationController
         if response
             render json: user, status: :created
         else
-            render json: user.errors.messages, status: 500
+            render json: user.errors.messages, status: :bad_request
         end
     end
 end
