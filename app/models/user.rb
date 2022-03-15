@@ -1,6 +1,6 @@
 class UserValidator < ActiveModel::Validator
     def validate(record)
-        alpha = "ABCDEFGHIJKLMNOPKRSTUVWXYZ"
+        alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         if record.name.length != 3
             record.errors[:errors] << "Username should have 3 characters"
             return
