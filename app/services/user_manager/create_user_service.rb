@@ -2,13 +2,14 @@ module UserManager
     class CreateUserService < ApplicationService
         def initialize(name)
             @name = name
+            @alpha = ('A'..'Z').to_a
         end
 
         def call
             ActiveRecord::Base.transaction do
-                alpha = ('A'..'Z').to_a
                 while User.find_by(name: @name) != nil
-                    @name = alpha[rand(alpha.length)]+alpha[rand(alpha.length)]+alpha[rand(alpha.length)]
+                    @name = generateUsername(3)
+                    puts @name
                 end
                 user = User.new(name: @name)
                 response = user.save
@@ -18,6 +19,14 @@ module UserManager
                     return {"data" => user.errors.messages, "status" => :bad_request}
                 end
             end
+        end
+
+        def generateUsername(length)
+            username = ""
+            for i in 1..length do
+                username.prepend(@alpha[rand(@alpha.length)])
+            end
+            return username
         end
     end
 end
