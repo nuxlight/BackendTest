@@ -1,27 +1,31 @@
 module UserManager
   class CreateUserService < ApplicationService
     def initialize(name)
+      super()
       @name = name
-      @alpha = ('A'..'Z').to_a
+      @alpha = ('A'..'Z').to_a # Pseaudo max size
     end
 
     def call
       ActiveRecord::Base.transaction do
+        Rails.logger.debug database_full?($global_pseudo_size)
         while User.find_by(name: @name) != nil
-          @name = generateUsername(3)
+          @name = generate_username($global_pseudo_size)
           Rails.logger.debug @name
         end
         user = User.new(name: @name)
         response = user.save
-        if response
-          return { 'data' => user, 'status' => :created }
-        else
-          return { 'data' => user.errors.messages, 'status' => :bad_request }
-        end
+        return { data: user, status: :created } if response
+
+        return { data: user.errors.messages, status: :bad_request }
       end
     end
 
-    def generateUsername(length)
+    def database_full?(pseudo_size)
+      User.count == (@alpha.length**pseudo_size)
+    end
+
+    def generate_username(length)
       username = ''
       (1..length).each do |_i|
         username.prepend(@alpha[rand(@alpha.length)])
