@@ -2,11 +2,11 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test 'Test User not valid length' do
-    alpha = "ABCDEFGHIJKLMNOPKRSTUVWXYZ"
-    gen_name = alpha[rand(26)]+alpha[rand(26)]+alpha[rand(26)]+alpha[rand(26)]
+    alpha = 'ABCDEFGHIJKLMNOPKRSTUVWXYZ'
+    gen_name = alpha[rand(26)] + alpha[rand(26)] + alpha[rand(26)] + alpha[rand(26)]
     a = User.new(name: gen_name)
     res = a.save
-    if !res 
+    if !res
       assert true
     else
       assert false
@@ -14,11 +14,11 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'Test User with valid length' do
-    alpha = "ABCDEFGHIJKLMNOPKRSTUVWXYZ"
-    gen_name = alpha[rand(26)]+alpha[rand(26)]+alpha[rand(26)]
+    alpha = 'ABCDEFGHIJKLMNOPKRSTUVWXYZ'
+    gen_name = alpha[rand(26)] + alpha[rand(26)] + alpha[rand(26)]
     a = User.new(name: gen_name)
     res = a.save
-    if res 
+    if res
       assert true
     else
       assert false
