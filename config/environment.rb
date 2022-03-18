@@ -4,4 +4,4 @@ require_relative 'application'
 # Initialize the Rails application.
 Rails.application.initialize!
 
-$global_pseudo_size = 2
+$global_pseudo_size = 3
