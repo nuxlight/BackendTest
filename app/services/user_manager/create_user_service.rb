@@ -7,17 +7,18 @@ module UserManager
     end
 
     def call
-      ActiveRecord::Base.transaction do
+      User.transaction(requires_new: true) do
         return { data: ['database full'], status: :insufficient_storage } if database_full?($global_pseudo_size)
 
-        users = User.all # Improving performance, only one call to database instance
-        @name = generate_username($global_pseudo_size) until users.find { |el| el.name == @name }.nil?
         user = User.new(name: @name)
         response = user.save
         return { data: user, status: :created } if response
 
         return { data: user.errors.messages, status: :bad_request }
       end
+    rescue ActiveRecord::RecordNotUnique
+      @name = generate_username($global_pseudo_size)
+      retry
     end
 
     def database_full?(pseudo_size)
