@@ -42,3 +42,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'active_model_serializers'
 gem 'rubocop-rails', '~> 2.14'
+gem 'rubocop-rspec'
