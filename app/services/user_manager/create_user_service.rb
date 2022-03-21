@@ -11,8 +11,7 @@ module UserManager
         return { data: ['database full'], status: :insufficient_storage } if database_full?($global_pseudo_size)
 
         user = User.new(name: @name)
-        response = user.save
-        return { data: user, status: :created } if response
+        return { data: user, status: :created } if user.save
 
         return { data: user.errors.messages, status: :bad_request }
       end
