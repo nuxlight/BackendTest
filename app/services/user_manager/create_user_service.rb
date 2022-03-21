@@ -3,7 +3,7 @@ module UserManager
     def initialize(name)
       super()
       @name = name
-      @alpha = ('A'..'Z').to_a # Pseaudo max size
+      @alpha = ('A'..'Z').to_a # Pseudo max size
     end
 
     def call
