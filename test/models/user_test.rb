@@ -2,11 +2,10 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test 'Test User not valid length' do
-    alpha = "ABCDEFGHIJKLMNOPKRSTUVWXYZ"
-    gen_name = alpha[rand(26)]+alpha[rand(26)]+alpha[rand(26)]+alpha[rand(26)]
+    gen_name = generate_username(2)
     a = User.new(name: gen_name)
     res = a.save
-    if !res 
+    if !res
       assert true
     else
       assert false
@@ -14,14 +13,22 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'Test User with valid length' do
-    alpha = "ABCDEFGHIJKLMNOPKRSTUVWXYZ"
-    gen_name = alpha[rand(26)]+alpha[rand(26)]+alpha[rand(26)]
+    gen_name = generate_username($global_pseudo_size)
     a = User.new(name: gen_name)
     res = a.save
-    if res 
+    if res
       assert true
     else
       assert false
     end
+  end
+
+  def generate_username(length)
+    alpha = ('A'..'Z').to_a
+    username = ''
+    (1..length).each do |_i|
+      username.prepend(alpha[rand(alpha.length)])
+    end
+    username
   end
 end

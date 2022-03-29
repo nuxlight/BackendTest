@@ -1,0 +1,11 @@
+require: rubocop-rails
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment: 
+  Enabled: false
+Rails/FilePath:
+  Enabled: false
+# Allow my global variable here to simplify pseudo length 
+GlobalVars:
+  AllowedVariables:
+    - $global_pseudo_size
